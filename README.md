@@ -36,3 +36,4 @@ Credits
 - `Clinton H Goudie-Nice aka TheDruidXpawX` for his work on the DruidsPlayerAgreement mutator, from which some code is borrowed!
 - `Infy` for her menu design and feedback!
 - `voltz`, `Aeon`, `SgtMuffin`, `DeepC`, and `DW>Ant` for their feedback!
+- Me, `0xC0ncord` aka `TonyTheSlayer` for the initial conception and creation of this mod.
