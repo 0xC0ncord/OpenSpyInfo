@@ -12,7 +12,7 @@ Installation
 Download the [latest release](https://github.com/0xC0ncord/OpenSpyInfo/releases/latest) and install it to your server's `System/` directory. Then, to activate the mod, do one of the following:
 1. Add the server actor to your `ServerActors`:
 ```
-ServerActors=OpenSpyInfo.OpenSpyServerActor
+ServerActors=OpenSpyInfo.OpenSpyInfoServerActor
 ```
 OR
 
