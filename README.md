@@ -22,6 +22,7 @@ Mutator=OpenSpyInfo102.MutOpenSpyInfo,...
 ```
 You must also ensure that this package exists on your server's redirect, regardless of whether you add it as a Server Actor or as a Mutator.
 No matter which method you choose, your server will have the `MutOpenSpyInfo` mutator running which is needed to react to joining players and prompt them with the menu.
+Adding the file to your `ServerPackages` is optional as the mutator will do this automatically.
 
 Screenshots
 -----------
