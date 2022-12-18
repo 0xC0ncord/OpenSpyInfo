@@ -35,4 +35,4 @@ Credits
 - the OpenSpy team for their amazing work on the OpenSpy UT2k3/UT2k4 master server!
 - `Clinton H Goudie-Nice aka TheDruidXpawX` for his work on the DruidsPlayerAgreement mutator, from which some code is borrowed!
 - `Infy` for her menu design and feedback!
-- `voltz`, `Aeon`, and `SgtMuffin` for their feedback!
+- `voltz`, `Aeon`, `SgtMuffin`, `DeepC`, and `DW>Ant` for their feedback!
