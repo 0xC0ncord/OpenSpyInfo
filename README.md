@@ -12,15 +12,16 @@ Installation
 Download the [latest release](https://github.com/0xC0ncord/OpenSpyInfo/releases/latest) and install it to your server's `System/` directory. Then, to activate the mod, do one of the following:
 1. Add the server actor to your `ServerActors`:
 ```
-ServerActors=OpenSpyInfo.OpenSpyInfoServerActor
+ServerActors=OpenSpyInfo102.OpenSpyInfoServerActor
 ```
 OR
 
 2. Add the mutator to your server's commandline (placement order does not matter):
 ```
-Mutator=OpenSpyInfo.MutOpenSpyInfo,...
+Mutator=OpenSpyInfo102.MutOpenSpyInfo,...
 ```
-No matter which you choose, your server will have the `MutOpenSpyInfo` mutator running which is needed to react to joining players and prompt them with the menu.
+You must also ensure that this package exists on your server's redirect, regardless of whether you add it as a Server Actor or as a Mutator.
+No matter which method you choose, your server will have the `MutOpenSpyInfo` mutator running which is needed to react to joining players and prompt them with the menu.
 
 Screenshots
 -----------
