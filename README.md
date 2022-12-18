@@ -7,6 +7,21 @@ The menu will also provide players with a button they can use to automatically c
 
 This mutator is fully compatible with DruidsPlayerAgreement. When both mods are in use, the OpenSpyInfo menu will display first and then the player agreement menu will display after the OpenSpy menu is dismissed.
 
+Installation
+------------
+Download the [latest release](https://github.com/0xC0ncord/OpenSpyInfo/releases/latest) and install it to your server's `System/` directory. Then, to activate the mod, do one of the following:
+1. Add the server actor to your `ServerActors`:
+```
+ServerActors=OpenSpyInfo.OpenSpyServerActor
+```
+OR
+
+2. Add the mutator to your server's commandline (placement order does not matter):
+```
+Mutator=OpenSpyInfo.MutOpenSpyInfo,...
+```
+No matter which you choose, your server will have the `MutOpenSpyInfo` mutator running which is needed to react to joining players and prompt them with the menu.
+
 Screenshots
 -----------
 ![Screenshot of the OpenSpy Info message window](Screenshots/preview.png)
