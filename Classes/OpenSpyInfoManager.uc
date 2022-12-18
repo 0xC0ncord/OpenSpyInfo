@@ -212,5 +212,6 @@ defaultproperties
     NetPriority=3.0
     bSkipActorPropertyReplication=True
     bReplicateMovement=False
+    bAlwaysRelevant=False
     bOnlyRelevantToOwner=True
 }
