@@ -60,9 +60,11 @@ simulated function Tick(float dt)
 {
     if(Role == ROLE_Authority && bUpdateAgreementTimeout)
     {
+        bUpdateAgreementTimeout = False;
         AgreementTimeout = int(AgreementManager.GetPropertyText("Timeout"));
         AgreementManager.LifeSpan = 0;
         Disable('Tick');
+        return;
     }
 
     if(bOpened)
