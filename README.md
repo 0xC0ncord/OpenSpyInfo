@@ -39,4 +39,5 @@ Credits
 - `SgtMuffin` for identifying and helping to test a fix for menus reopening when other players joined!
 - `Infy` for her menu design and feedback!
 - `voltz`, `Aeon`, `DeepC`, and `DW>Ant` for their feedback!
+- `Ragnos` for identifying the incompatibility and testing with AntiTCC!
 - Me, `0xC0ncord` aka `TonyTheSlayer` for the initial conception and creation of this mod.
