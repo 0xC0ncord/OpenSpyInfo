@@ -107,8 +107,11 @@ function bool Acknowledge(GUIComponent Sender)
 
 function bool AutoConfigure(GUIComponent Sender)
 {
-    Controller.ViewportOwner.Actor.ConsoleCommand("Set IpDrv.MasterServerLink MasterServerList ((Address=\"utmaster.openspy.net\",Port=28902))");
+    class'IpDrv.MasterServerLink'.default.MasterServerList.Length = 1;
+    class'IpDrv.MasterServerLink'.default.MasterServerList[0].Address = "utmaster.openspy.net";
+    class'IpDrv.MasterServerLink'.default.MasterServerList[0].Port = 28902;
     class'IpDrv.MasterServerLink'.static.StaticSaveConfig();
+
     Controller.OpenMenu(string(class'OpenSpyInfoAutoConfigureMessageWindow'));
     return true;
 }
