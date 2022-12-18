@@ -19,6 +19,7 @@ function bool CheckReplacement(Actor Other, out byte bSuperRelevant)
         PlayerController(Other) != None
         && Camera(Other) == None
         && MessagingSpectator(Other) == None
+        && !Other.IsA('BTGhostController') // ignore BTimes ghosts
     )
     {
         // wait for them to get a PRI first
