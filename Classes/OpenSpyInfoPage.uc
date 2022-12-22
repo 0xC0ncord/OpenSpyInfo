@@ -91,8 +91,8 @@ function bool Acknowledge(GUIComponent Sender)
     {
         if(ckDontShowAgain.IsChecked())
         {
-            Manager.bDontShowAgain = true;
-            Manager.SaveConfig();
+            Manager.ConfigData.bDontShowAgain = true;
+            Manager.ConfigData.SaveConfig();
         }
 
         if(Manager.AgreementPage != None)

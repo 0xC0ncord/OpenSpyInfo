@@ -6,8 +6,9 @@
 // it under the terms of the Open Unreal Mod License version 1.1.
 //=============================================================================
 
-class OpenSpyInfoManager extends ReplicationInfo
-    config(OpenSpyInfo);
+class OpenSpyInfoManager extends ReplicationInfo;
+
+const CONFIG_DATA_NAME = "Main";
 
 var PlayerController PC;
 var bool bWasSpectator;
@@ -22,7 +23,7 @@ var Actor AgreementManager;
 var int AgreementTimeout;
 var bool bUpdateAgreementTimeout;
 
-var() config bool bDontShowAgain;
+var OpenSpyInfoConfig ConfigData;
 
 replication
 {
@@ -105,7 +106,11 @@ simulated function Tick(float dt)
         return;
     }
 
-    if(default.bDontShowAgain)
+    ConfigData = OpenSpyInfoConfig(FindObject("Package." $ CONFIG_DATA_NAME, class'OpenSpyInfoConfig'));
+    if(ConfigData == None)
+        ConfigData = new(None, CONFIG_DATA_NAME) class'OpenSpyInfoConfig';
+
+    if(ConfigData.bDontShowAgain)
     {
         ServerAcknowledge();
         Disable('Tick');
