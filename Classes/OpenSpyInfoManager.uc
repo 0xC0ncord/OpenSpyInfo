@@ -176,6 +176,16 @@ function ServerAcknowledge()
     Destroy();
 }
 
+function Mutator FindMutatorByName(name MutName)
+{
+    local Mutator M;
+
+    for(M = Level.Game.BaseMutator; M != None; M = M.NextMutator)
+        if(M.IsA(MutName))
+            return M;
+    return None;
+}
+
 function Destroyed()
 {
     local Mutator M, OldNextM;
@@ -211,9 +221,7 @@ function Destroyed()
                 if(Level.Game.bTeamGame)
                 {
                     // check if EvenMatch is running, then adjust the player's destined team accordingly
-                    for(M = Level.Game.BaseMutator; M != None; M = M.NextMutator)
-                        if(M.IsA('MutTeamBalance'))
-                            break;
+                    M = FindMutatorByName('MutTeamBalance');
                     if(M == None)
                         Level.Game.ChangeTeam(PC, Level.Game.PickTeam(int(PC.GetURLOption("Team")), None), false);
                     else
