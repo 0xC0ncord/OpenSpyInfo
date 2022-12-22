@@ -178,6 +178,9 @@ function ServerAcknowledge()
 
 function Destroyed()
 {
+    local Mutator M, OldNextM;
+    local string Portal, Options;
+
     if(AgreementManager != None)
     {
         // note that the agreement manager could be destroyed early if the player already agreed before
@@ -204,8 +207,29 @@ function Destroyed()
                 PC.Adrenaline = 0;
                 PC.BroadcastLocalizedMessage(Level.Game.GameMessageClass, 1, PC.PlayerReplicationInfo);
                 PC.GotoState('PlayerWaiting');
+
                 if(Level.Game.bTeamGame)
-                    Level.Game.ChangeTeam(PC, Level.Game.PickTeam(int(PC.GetURLOption("Team")), None), false);
+                {
+                    // check if EvenMatch is running, then adjust the player's destined team accordingly
+                    for(M = Level.Game.BaseMutator; M != None; M = M.NextMutator)
+                        if(M.IsA('MutTeamBalance'))
+                            break;
+                    if(M == None)
+                        Level.Game.ChangeTeam(PC, Level.Game.PickTeam(int(PC.GetURLOption("Team")), None), false);
+                    else
+                    {
+                        // do not inform other mutators just in case
+                        OldNextM = M.NextMutator;
+                        M.NextMutator = None;
+
+                        // total hack to find out what team EvenMatch wants this player on
+                        M.ModifyLogin(Portal, Options);
+                        Level.Game.ChangeTeam(PC, Level.Game.PickTeam(int(Repl(Locs(Options), "?team=", "")), None), false);
+
+                        M.NextMutator = OldNextM;
+                    }
+                }
+
                 if(Level.Game.IsA('InvasionX'))
                 {
                     PC.PlayerReplicationInfo.NumLives = 0;
