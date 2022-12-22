@@ -8,6 +8,11 @@
 
 class MutOpenSpyInfo extends Mutator;
 
+// Note to mod authors: if you are making a customized version of OpenSpyInfo,
+// feel free to remove this line. It is used to track internal versions of the
+// mod for official releases.
+const INTERNAL_VERSION = $$"__VERSIONSTRING__"$$;
+
 var array<PlayerController> Pending;
 
 function bool CheckReplacement(Actor Other, out byte bSuperRelevant)
