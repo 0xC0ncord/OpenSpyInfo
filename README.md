@@ -28,6 +28,16 @@ Screenshots
 -----------
 ![Screenshot of the OpenSpy Info message window](Screenshots/preview.png)
 
+Localization
+------------
+If you would like to help translate the mod, please take a look at ![OpenSpyInfoText.uc](Classes/OpenSpyInfoText.uc) and submit a pull request with your edits. Don't worry if you don't have any UnrealScript knowledge - I'll be more than happy to help get your translation integrated if needed.
+
+FAQ
+---
+Q. I want to make some modifications to this mod like changing the text. Am I allowed to?
+
+A. Yes! You are free to make any modifications as you like, but the source code must be made available on request per the license. Additionally, you should make sure to name your customized version differently so that it does not cause version conflicts (and thus headaches).
+
 License
 -------
 OpenSpyInfo is licensed under the Open Unreal Mod License version 1.1. See [LICENSE](LICENSE) for details.
