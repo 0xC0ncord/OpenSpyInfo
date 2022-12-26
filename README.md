@@ -39,5 +39,7 @@ Credits
 - `SgtMuffin` for identifying and helping to test a fix for menus reopening when other players joined!
 - `Infy` for her menu design and feedback!
 - `voltz`, `Aeon`, `DeepC`, and `DW>Ant` for their feedback!
-- `Ragnos` for identifying the incompatibility and testing with AntiTCC!
+- `Ema` for the German translation.
+- `Cosma` for the French translation.
+- `Ragnos` for identifying the incompatibility and testing with AntiTCC and help fixing encoding issues in the translations.
 - Me, `0xC0ncord` aka `TonyTheSlayer` for the initial conception and creation of this mod.
