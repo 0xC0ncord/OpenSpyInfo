@@ -8,53 +8,186 @@
 
 class OpenSpyInfoPage extends GUIPage;
 
+#EXEC TEXTURE IMPORT NAME=lang_en FILE=Assets\Textures\lang_en.tga MIPS=0 ALPHA=1 DXT=3 LODSET=5
+#EXEC TEXTURE IMPORT NAME=lang_de FILE=Assets\Textures\lang_de.tga MIPS=0 ALPHA=1 DXT=3 LODSET=5
+#EXEC TEXTURE IMPORT NAME=lang_fr FILE=Assets\Textures\lang_fr.tga MIPS=0 ALPHA=1 DXT=3 LODSET=5
+
 var automated GUISectionBackground sbBackground, sbButtons;
 var automated GUILabel txHeader;
 var automated GUIScrollTextBox lbText;
 var automated GUIButton btAcknowledge, btAutoConfigure, btMoreInfo;
 var automated moCheckBox ckDontShowAgain;
 
+var automated GUIButton btLangEN,
+                        btLangDE,
+                        btLangFR;
+
 var OpenSpyInfoManager Manager;
 var bool bClosed;
 
-var localized string WindowTitle;
-var localized string Text_DontShowAgain;
-var localized string Text_Acknowledge;
-var localized string Text_AutoConfigure;
-var localized string Text_MoreInfo;
-
-var localized string InfoText00;
-var localized string InfoText01;
-var localized string InfoText02;
-var localized string InfoText03;
-var localized string InfoText04;
-var localized string InfoText05;
-var localized string InfoText06;
-var localized string InfoText07;
-var localized string InfoText08;
-var localized string InfoText09;
 var string InfoURL;
 
 function InitComponent(GUIController MyController, GUIComponent MyOwner)
 {
+    local int LangId;
+
     Super.InitComponent(MyController, MyOwner);
+
+    OnRendered = DrawLanguageButtons;
 
     bClosed = false;
 
-    txHeader.Caption = Colorize(InfoText00);
-    lbText.AddText(Colorize(InfoText01) @ Colorize(InfoText02) $ "|");
-    lbText.AddText(Colorize(InfoText03) $ "|");
-    lbText.AddText(Colorize(InfoText04) @ Colorize(InfoText05) $ "|");
-    lbText.AddText(Colorize(InfoText06) $ "|");
-    lbText.AddText(Colorize(Repl(InfoText07, "$1", InfoURL)) $ "|");
-    lbText.AddText(Colorize(InfoText08) $ "|");
-    lbText.AddText(Colorize(InfoText09));
+    LangId = int(Localize("Language", "LangId", "Core"));
 
-    sbBackground.Caption = WindowTitle;
-    btAcknowledge.Caption = Text_Acknowledge;
-    btAutoConfigure.Caption = Text_AutoConfigure;
-    btMoreInfo.Caption = Text_MoreInfo;
-    ckDontShowAgain.MyLabel.Caption = Text_DontShowAgain;
+    switch(LangId)
+    {
+        case 7:
+            UpdateLanguage("de");
+            break;
+        case 10:
+            UpdateLanguage("es");
+            break;
+        case 12:
+            UpdateLanguage("fr");
+            break;
+        case 16:
+            UpdateLanguage("it");
+            break;
+        case 18:
+            UpdateLanguage("ko");
+            break;
+        case 4:
+            UpdateLanguage("mt");
+            break;
+        case 9:
+        default:
+            UpdateLanguage("en");
+            break;
+    }
+}
+
+function UpdateLanguage(string Lang)
+{
+    switch(Caps(Lang))
+    {
+        case "DE":
+            txHeader.Caption = Colorize(class'OpenSpyInfoText'.default.InfoText00_de);
+            lbText.MyScrollText.SetContent(
+                Colorize(class'OpenSpyInfoText'.default.InfoText01_de)
+                @ Colorize(class'OpenSpyInfoText'.default.InfoText02_de)
+                @ Colorize(class'OpenSpyInfoText'.default.InfoText03_de)
+                @ Colorize(class'OpenSpyInfoText'.default.InfoText04_de)
+                @ Colorize(Repl(class'OpenSpyInfoText'.default.InfoText05_de, "$1", InfoURL))
+                @ Colorize(class'OpenSpyInfoText'.default.InfoText06_de)
+                @ Colorize(class'OpenSpyInfoText'.default.InfoText07_de)
+                @ Colorize(class'OpenSpyInfoText'.default.InfoText08_de)
+                @ Colorize(class'OpenSpyInfoText'.default.InfoText09_de)
+            );
+            sbBackground.Caption = class'OpenSpyInfoText'.default.WindowTitle_de;
+            btAcknowledge.Caption = class'OpenSpyInfoText'.default.Text_Acknowledge_de;
+            btAutoConfigure.Caption = class'OpenSpyInfoText'.default.Text_AutoConfigure_de;
+            btMoreInfo.Caption = class'OpenSpyInfoText'.default.Text_MoreInfo_de;
+            ckDontShowAgain.MyLabel.Caption = class'OpenSpyInfoText'.default.Text_DontShowAgain_de;
+            break;
+        case "FR":
+            txHeader.Caption = Colorize(class'OpenSpyInfoText'.default.InfoText00_fr);
+            lbText.MyScrollText.SetContent(
+                Colorize(class'OpenSpyInfoText'.default.InfoText01_fr)
+                @ Colorize(class'OpenSpyInfoText'.default.InfoText02_fr)
+                @ Colorize(class'OpenSpyInfoText'.default.InfoText03_fr)
+                @ Colorize(class'OpenSpyInfoText'.default.InfoText04_fr)
+                @ Colorize(Repl(class'OpenSpyInfoText'.default.InfoText05_fr, "$1", InfoURL))
+                @ Colorize(class'OpenSpyInfoText'.default.InfoText06_fr)
+                @ Colorize(class'OpenSpyInfoText'.default.InfoText07_fr)
+                @ Colorize(class'OpenSpyInfoText'.default.InfoText08_fr)
+                @ Colorize(class'OpenSpyInfoText'.default.InfoText09_fr)
+            );
+            sbBackground.Caption = class'OpenSpyInfoText'.default.WindowTitle_fr;
+            btAcknowledge.Caption = class'OpenSpyInfoText'.default.Text_Acknowledge_fr;
+            btAutoConfigure.Caption = class'OpenSpyInfoText'.default.Text_AutoConfigure_fr;
+            btMoreInfo.Caption = class'OpenSpyInfoText'.default.Text_MoreInfo_fr;
+            ckDontShowAgain.MyLabel.Caption = class'OpenSpyInfoText'.default.Text_DontShowAgain_fr;
+            break;
+        case "EN":
+        default:
+            txHeader.Caption = Colorize(class'OpenSpyInfoText'.default.InfoText00_en);
+            lbText.MyScrollText.SetContent(
+                Colorize(class'OpenSpyInfoText'.default.InfoText01_en)
+                @ Colorize(class'OpenSpyInfoText'.default.InfoText02_en)
+                @ Colorize(class'OpenSpyInfoText'.default.InfoText03_en)
+                @ Colorize(class'OpenSpyInfoText'.default.InfoText04_en)
+                @ Colorize(Repl(class'OpenSpyInfoText'.default.InfoText05_en, "$1", InfoURL))
+                @ Colorize(class'OpenSpyInfoText'.default.InfoText06_en)
+                @ Colorize(class'OpenSpyInfoText'.default.InfoText07_en)
+                @ Colorize(class'OpenSpyInfoText'.default.InfoText08_en)
+                @ Colorize(class'OpenSpyInfoText'.default.InfoText09_en)
+            );
+            sbBackground.Caption = class'OpenSpyInfoText'.default.WindowTitle_en;
+            btAcknowledge.Caption = class'OpenSpyInfoText'.default.Text_Acknowledge_en;
+            btAutoConfigure.Caption = class'OpenSpyInfoText'.default.Text_AutoConfigure_en;
+            btMoreInfo.Caption = class'OpenSpyInfoText'.default.Text_MoreInfo_en;
+            ckDontShowAgain.MyLabel.Caption = class'OpenSpyInfoText'.default.Text_DontShowAgain_en;
+            break;
+    }
+}
+
+function bool SetLanguage(GUIComponent Sender)
+{
+    switch(Sender)
+    {
+        case btLangDE:
+            UpdateLanguage("de");
+            break;
+        case btLangFR:
+            UpdateLanguage("fr");
+            break;
+        case btLangEN:
+        default:
+            UpdateLanguage("en");
+            break;
+    }
+    return true;
+}
+
+function DrawLanguageButtons(Canvas C)
+{
+    DrawLanguageFlag(C, btLangEN);
+    DrawLanguageFlag(C, btLangDE);
+    DrawLanguageFlag(C, btLangFR);
+}
+
+function DrawLanguageFlag(Canvas C, GUIButton Sender)
+{
+    local Texture T;
+    local float X, Y, U, V;
+
+    switch(Sender)
+    {
+        case btLangDE:
+            T = Texture'lang_de';
+            break;
+        case btLangFR:
+            T = Texture'lang_fr';
+            break;
+        case btLangEN:
+        default:
+            T = Texture'lang_en';
+            break;
+    }
+
+    C.Style = 5; // STY_Alpha
+    C.DrawColor.A = 255;
+    C.DrawColor.R = 255;
+    C.DrawColor.G = 255;
+    C.DrawColor.B = 255;
+
+    U = Sender.ActualWidth() * 0.8;
+    V = Sender.ActualHeight() * 0.8;
+    X = Sender.ActualLeft() + Sender.ActualWidth() * 0.1;
+    Y = Sender.ActualTop() + Sender.ActualHeight() * 0.1;
+
+    C.SetPos(X, Y);
+    C.DrawTile(T, U, V, 0, 0, T.MaterialUSize(), T.MaterialVSize());
 }
 
 function bool InternalOnPreDraw(Canvas C)
@@ -224,7 +357,7 @@ defaultproperties
         WinTop=0.127777
         WinHeight=0.455730
         WinLeft=0.107812
-        WinWidth=0.777084
+        WinWidth=0.772397
         bBoundToParent=True
         bScaleToParent=True
         bNeverFocus=True
@@ -272,29 +405,51 @@ defaultproperties
         FontScale=FNS_Small
         WinTop=0.593487
         WinLeft=0.107812
-        WinWidth=0.207744
+        WinWidth=0.255660
         bBoundToParent=True
         bScaleToParent=True
     End Object
     ckDontShowAgain=moCheckBox'ckDontShowAgain_'
 
-    WindowTitle="Important Information on the Future of UT2004 Online Play"
+    Begin Object Class=GUIButton Name=btLangEN_
+        FontScale=FNS_Small
+        WinTop=0.070140
+        WinLeft=0.913335
+        WinWidth=0.035000
+        WinHeight=0.058700
+        bBoundToParent=True
+        bScaleToParent=True
+        OnClick=OpenSpyInfoPage.SetLanguage
+        OnKeyEvent=btLangEN_.InternalOnKeyEvent
+    End Object
+    btLangEN=GUIButton'btLangEN_'
 
-    Text_Acknowledge="I understand."
-    Text_AutoConfigure="Auto-Configure"
-    Text_MoreInfo="More Info"
-    Text_DontShowAgain="Don't show this again"
+    Begin Object Class=GUIButton Name=btLangDE_
+        FontScale=FNS_Small
+        WinTop=0.131450
+        WinLeft=0.913335
+        WinWidth=0.035000
+        WinHeight=0.058700
+        bBoundToParent=True
+        bScaleToParent=True
+        OnClick=OpenSpyInfoPage.SetLanguage
+        OnKeyEvent=btLangDE_.InternalOnKeyEvent
+    End Object
+    btLangDE=GUIButton'btLangDE_'
 
-    InfoText00="$(255,0,0)PLEASE READ THIS!"
-    InfoText01="$(255,255,255)On December 14, 2022, Epic Games announced that they will be shutting down online servers for their older titles, $(255,0,0)including Unreal Tournament 2004$(255,255,255), no later than January 24, 2023."
-    InfoText02="This means that in the near future, the master server(s) powering UT2004 online play will be going offline."
-    InfoText03="In other words, online features such as the News feed, Buddies system, and most importantly, the Server Browser, $(255,0,0)will cease to function."
-    InfoText04="$(255,255,255)Thankfully, an alternative master server was created by the $(0,192,255)OpenSpy $(255,255,255)project which allows the Server Browser to continue to work after Epic Games shuts down the official one."
-    InfoText05="To use it, you will need to make minor changes to your game's configuration ($(0,192,255)UT2004.ini$(255,255,255))."
-    InfoText06="It is $(255,0,0)highly recommended $(255,255,255)to read the documentation so that you understand the caveats and limitations of this."
-    InfoText07="You can click the $(0,255,0)More Info $(255,255,255)button below to open your web browser to a page with more information and detailed instructions on making these changes yourself ($(0,192,255)$1$(255,255,255))."
-    InfoText08="If you would like to make these changes to your game's configuration automatically, click the $(0,255,0)Auto-Configure $(255,255,255)button below."
-    InfoText09="$(255,0,0)Note that these automated changes will make you unable to use the Server Browser to view servers that have not yet switched to the OpenSpy master server!"
+    Begin Object Class=GUIButton Name=btLangFR_
+        FontScale=FNS_Small
+        WinTop=0.193500
+        WinLeft=0.913335
+        WinWidth=0.035000
+        WinHeight=0.058700
+        bBoundToParent=True
+        bScaleToParent=True
+        OnClick=OpenSpyInfoPage.SetLanguage
+        OnKeyEvent=btLangFR_.InternalOnKeyEvent
+    End Object
+    btLangFR=GUIButton'btLangFR_'
+
     InfoURL="http://ut2004serverlist.com"
 
     bAllowedAsLast=True
