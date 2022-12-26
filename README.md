@@ -30,7 +30,7 @@ Screenshots
 
 Localization
 ------------
-If you would like to help translate the mod, please take a look at ![OpenSpyInfoText.uc](Classes/OpenSpyInfoText.uc) and submit a pull request with your edits. Don't worry if you don't have any UnrealScript knowledge - I'll be more than happy to help get your translation integrated if needed.
+If you would like to help translate the mod, please take a look at [OpenSpyInfoText.uc](Classes/OpenSpyInfoText.uc) and submit a pull request with your edits. Don't worry if you don't have any UnrealScript knowledge - I'll be more than happy to help get your translation integrated if needed.
 
 FAQ
 ---
