@@ -37,17 +37,9 @@ var string InfoURL;
 
 function InitComponent(GUIController MyController, GUIComponent MyOwner)
 {
-    local Color RedColor;
-    local Color BlueColor;
-
     Super.InitComponent(MyController, MyOwner);
 
     bClosed = false;
-
-    RedColor.R = 255;
-
-    BlueColor.G = 192;
-    BlueColor.B = 255;
 
     txHeader.Caption = Colorize(InfoText00);
     lbText.AddText(Colorize(InfoText01) @ Colorize(InfoText02) $ "|");
