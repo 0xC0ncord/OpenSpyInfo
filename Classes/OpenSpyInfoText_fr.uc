@@ -13,7 +13,7 @@ defaultproperties
     InfoText00="$(255,0,0)MERCI DE LIRE CECI !"
     InfoText01="$(255,255,255)Epic Games a annoncé la fermeture des serveurs pour ses jeux les plus anciens, $(255,0,0)dont Unreal Tournament 2004$(255,255,255), au plus tard le 24 janvier 2023."
     InfoText02="Cela veut dire que, dans un avenir proche, le fil d'actualité, le système de Buddy et le navigateur du serveur (à l'exception des favoris) ne fonctionneront plus."
-    InfoText03="|$(255,255,255)Heureusement, un serveur maître alternatif a été créé par le projet $(0,192,255)OpenSpy $(255,255,255) qui permettra à ces services de continuer à fonctionner après cette date."
+    InfoText03="|$(255,255,255)Heureusement, un serveur maître alternatif a été créé par le projet $(0,192,255)OpenSpy $(255,255,255)qui permettra à ces services de continuer à fonctionner après cette date."
     InfoText04="|$(255,255,255)Pour l'utiliser, vous devrez apporter de petites modifications à votre fichier $(0,192,255)UT2004.ini $(255,255,255)dans le dossier Système de votre jeu."
     InfoText05="||Si vous souhaitez effectuer ces modifications manuellement, cliquez sur le bouton $(0,255,0)Plus d'Infos $(255,255,255)ci-dessous pour ouvrir un site $(0,192,255)$1$(255,255,255) avec plus d'informations et instructions détaillées."
     InfoText06="|Si vous souhaitez effectuer ces modifications automatiquement, cliquez sur le bouton Auto-Configuration ci-dessous."
