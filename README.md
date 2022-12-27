@@ -51,5 +51,6 @@ Credits
 - `voltz`, `Aeon`, `DeepC`, and `DW>Ant` for their feedback!
 - `Ema` for the German translation.
 - `Cosma` for the French translation.
+- `209CATrus` for the Russian translation.
 - `Ragnos` for identifying the incompatibility and testing with AntiTCC and help fixing encoding issues in the translations.
 - Me, `0xC0ncord` aka `TonyTheSlayer` for the initial conception and creation of this mod.

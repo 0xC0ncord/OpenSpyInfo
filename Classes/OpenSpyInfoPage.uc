@@ -11,6 +11,7 @@ class OpenSpyInfoPage extends GUIPage;
 #EXEC TEXTURE IMPORT NAME=lang_en FILE=Assets\Textures\lang_en.tga MIPS=0 ALPHA=1 DXT=3 LODSET=5
 #EXEC TEXTURE IMPORT NAME=lang_de FILE=Assets\Textures\lang_de.tga MIPS=0 ALPHA=1 DXT=3 LODSET=5
 #EXEC TEXTURE IMPORT NAME=lang_fr FILE=Assets\Textures\lang_fr.tga MIPS=0 ALPHA=1 DXT=3 LODSET=5
+#EXEC TEXTURE IMPORT NAME=lang_ru FILE=Assets\Textures\lang_ru.tga MIPS=0 ALPHA=1 DXT=3 LODSET=5
 
 var automated GUISectionBackground sbBackground, sbButtons;
 var automated GUILabel txHeader;
@@ -20,7 +21,8 @@ var automated moCheckBox ckDontShowAgain;
 
 var automated GUIButton btLangEN,
                         btLangDE,
-                        btLangFR;
+                        btLangFR,
+                        btLangRU;
 
 var OpenSpyInfoManager Manager;
 var bool bClosed;
@@ -31,14 +33,26 @@ function InitComponent(GUIController MyController, GUIComponent MyOwner)
 {
     local int LangId;
 
+    MyController.RegisterStyle(class'STY2NoBackground_i18n');
+    MyController.RegisterStyle(class'STY2TextLabel_i18n');
+    MyController.RegisterStyle(class'STY2SquareButton_i18n');
+
     Super.InitComponent(MyController, MyOwner);
+
+    txHeader.Style                  = Controller.GetStyle("NoBackground_i18n", txHeader.FontScale);
+    lbText.MyScrollText.Style       = Controller.GetStyle("NoBackground_i18n", lbText.MyScrollText.FontScale);
+    sbBackground.CaptionStyle       = Controller.GetStyle("TextLabel_i18n", sbBackground.FontScale);
+    ckDontShowAgain.MyLabel.Style   = Controller.GetStyle("TextLabel_i18n", ckDontShowAgain.MyLabel.FontScale);
+    btAcknowledge.Style             = Controller.GetStyle("SquareButton_i18n", btAcknowledge.FontScale);
+    btAutoConfigure.Style           = Controller.GetStyle("SquareButton_i18n", btAutoConfigure.FontScale);
+    btMoreInfo.Style                = Controller.GetStyle("SquareButton_i18n", btMoreInfo.FontScale);
 
     OnRendered = DrawLanguageButtons;
 
     bClosed = false;
 
+    // try to autoswitch to the language set by the game, defaulting to en
     LangId = int(Localize("Language", "LangId", "Core"));
-
     switch(LangId)
     {
         case 7:
@@ -78,6 +92,9 @@ function UpdateLanguage(string Lang)
         case "FR":
             TextClass = class'OpenSpyInfoText_fr';
             break;
+        case "RU":
+            TextClass = class'OpenSpyInfoText_ru';
+            break;
         case "EN":
         default:
             TextClass = class'OpenSpyInfoText';
@@ -113,6 +130,9 @@ function bool SetLanguage(GUIComponent Sender)
         case btLangFR:
             UpdateLanguage("fr");
             break;
+        case btLangRU:
+            UpdateLanguage("ru");
+            break;
         case btLangEN:
         default:
             UpdateLanguage("en");
@@ -126,6 +146,7 @@ function DrawLanguageButtons(Canvas C)
     DrawLanguageFlag(C, btLangEN);
     DrawLanguageFlag(C, btLangDE);
     DrawLanguageFlag(C, btLangFR);
+    DrawLanguageFlag(C, btLangRU);
 }
 
 function DrawLanguageFlag(Canvas C, GUIButton Sender)
@@ -140,6 +161,9 @@ function DrawLanguageFlag(Canvas C, GUIButton Sender)
             break;
         case btLangFR:
             T = Texture'lang_fr';
+            break;
+        case btLangRU:
+            T = Texture'lang_ru';
             break;
         case btLangEN:
         default:
@@ -309,7 +333,7 @@ defaultproperties
 {
     Begin Object Class=GUILabel Name=txHeader_
         TextAlign=TXTA_Center
-        FontScale=FNS_Small
+        FontScale=FNS_Large
         WinTop=0.070140
         WinLeft=0.107812
         WinWidth=0.786459
@@ -421,6 +445,19 @@ defaultproperties
         OnKeyEvent=btLangFR_.InternalOnKeyEvent
     End Object
     btLangFR=GUIButton'btLangFR_'
+
+    Begin Object Class=GUIButton Name=btLangRU_
+        FontScale=FNS_Small
+        WinTop=0.255540
+        WinLeft=0.913335
+        WinWidth=0.035000
+        WinHeight=0.058700
+        bBoundToParent=True
+        bScaleToParent=True
+        OnClick=OpenSpyInfoPage.SetLanguage
+        OnKeyEvent=btLangRU_.InternalOnKeyEvent
+    End Object
+    btLangRU=GUIButton'btLangRU_'
 
     InfoURL="http://ut2004serverlist.com"
 
