@@ -81,6 +81,7 @@ else
 fi
 SHA1SUM_OLD="$(cat "${CURRENT_DIR}"/Classes.sha1sum 2>/dev/null)"
 if [[ -f "${CURRENT_DIR}"/Classes.sha1sum && "${SHA1SUM_OLD}" = "${SHA1SUM}" ]]; then echo 'Source directory unchanged since last build. Nothing to do. Exiting.' && exit 1; fi
+PREPROCESSOR_EXCLUDED="$(cat PreprocessorExcluded.cfg)"
 if [[ ${NO_PREPROCESS} -eq 0 ]]; then
     echo Preprocessing...
     if [[ -f "${CURRENT_DIR}"/Classes/.preprocessed ]]; then
@@ -102,6 +103,7 @@ if [[ ${NO_PREPROCESS} -eq 0 ]]; then
                 +cccs "/*" "*/" +cccs "//" "\n" +cccs "\\\n" "" \
                 +s "\"" "\"" "\\" +s "'" "'" "\\" \
                 ${OPTS[@]} \
+                -D__PACKAGE__="${BASENAME}" \
                 -D__VERSION__="${VERSION}" \
                 -D__BUILDINFO__="${BUILD_INFO}" \
                 -D__VERSIONSTRING__="${VERSION_STRING}" \
@@ -119,6 +121,10 @@ if [[ ${NO_PREPROCESS} -eq 0 ]]; then
 
         for FILE in "${CURRENT_DIR}"/.Classes/*.uc; do
 
+            if [[ "${PREPROCESSOR_EXCLUDED[*]}" =~ "Classes/$(basename "${FILE}")" ]]; then
+                continue
+            fi
+
             DEST="${CURRENT_DIR}/Classes/$(basename ${FILE})"
 
             gpp \
@@ -127,6 +133,7 @@ if [[ ${NO_PREPROCESS} -eq 0 ]]; then
                 +csss "/*" "*/" +csss "//" "\n" +csss "\\\n" "" \
                 +s "\"" "\"" "\\" +s "'" "'" "\\" \
                 ${OPTS[@]} \
+                -D__PACKAGE__="${BASENAME}" \
                 -D__VERSION__="${VERSION}" \
                 -D__BUILDINFO__="${BUILD_INFO}" \
                 -D__VERSIONSTRING__="${VERSION_STRING}" \
