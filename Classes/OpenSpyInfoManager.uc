@@ -206,6 +206,13 @@ function Destroyed()
                 PC.GotoState('PlayerWaiting');
                 if(Level.Game.bTeamGame)
                     Level.Game.ChangeTeam(PC, Level.Game.PickTeam(int(PC.GetURLOption("Team")), None), false);
+                if(Level.Game.IsA('InvasionX'))
+                {
+                    PC.PlayerReplicationInfo.NumLives = 0;
+                    PC.PlayerReplicationInfo.bOutOfLives = false;
+                    Level.Game.RestartPlayer(PC);
+                    PC.ServerGivePawn();
+                }
             }
         }
     }
