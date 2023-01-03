@@ -10,10 +10,12 @@ class OpenSpyInfoManager extends ReplicationInfo;
 
 const CONFIG_DATA_NAME = "Main";
 
+var OpenSpyInfoServerConfig ServerConfig;
 var PlayerController PC;
 var bool bWasSpectator;
 var bool bInitialized;
 var bool bOpened;
+var vector PawnLocation;
 
 var OpenSpyInfoPage InfoPage;
 
@@ -31,41 +33,60 @@ replication
         ServerAcknowledge;
 }
 
-simulated function PostNetBeginPlay()
+function Setup(OpenSpyInfoServerConfig SC)
 {
-    if(
-        Level.NetMode == NM_DedicatedServer
-    )
-    {
-        Disable('Tick');
-    }
-}
-
-function Setup()
-{
+    ServerConfig = SC;
     PC = PlayerController(Owner);
     bWasSpectator = PC.PlayerReplicationInfo.bOnlySpectator;
 
-    if(!bWasSpectator)
+    if(!SC.bUseSpawnProtection)
     {
-        if(PC.Pawn != None)
-            PC.Pawn.Died(None, class'DamageType', PC.Pawn.Location);
+        if(!bWasSpectator)
+        {
+            if(PC.Pawn != None)
+                PC.Pawn.Died(None, class'DamageType', PC.Pawn.Location);
 
-        PC.PlayerReplicationInfo.bOnlySpectator = true;
-        PC.GotoState('Spectating');
+            PC.PlayerReplicationInfo.bOnlySpectator = true;
+            PC.GotoState('Spectating');
+        }
+    }
+    else
+    {
+        if(Level.NetMode == NM_DedicatedServer)
+            Disable('Tick');
+
+        if(PC.Pawn != None)
+        {
+            PC.Pawn.SetPhysics(PHYS_None); // to avoid getting pushed around
+            PC.Pawn.SpawnTime = MaxInt; // infinite spawn protection
+            PawnLocation = PC.Pawn.Location;
+        }
     }
     bInitialized = true;
 }
 
 simulated function Tick(float dt)
 {
-    if(Role == ROLE_Authority && bUpdateAgreementTimeout)
+    if(Role == ROLE_Authority)
     {
-        bUpdateAgreementTimeout = False;
-        AgreementTimeout = int(AgreementManager.GetPropertyText("Timeout"));
-        AgreementManager.LifeSpan = 0;
-        Disable('Tick');
-        return;
+        if(ServerConfig.bUseSpawnProtection)
+        {
+            PC.Pawn.SetPhysics(PHYS_None);
+            PC.Pawn.SpawnTime = MaxInt; // make sure spawn protection doesnt end until menu is closed
+            if(PC.Pawn.Location != PawnLocation)
+                PC.Pawn.SetLocation(PawnLocation);
+        }
+
+        if(bUpdateAgreementTimeout)
+        {
+            bUpdateAgreementTimeout = False;
+            AgreementTimeout = int(AgreementManager.GetPropertyText("Timeout"));
+            AgreementManager.LifeSpan = 0;
+        }
+
+        // if we are a server and this isn't the host's controller
+        if(Viewport(PC.Player) == None)
+            return;
     }
 
     if(bOpened)
@@ -194,7 +215,12 @@ function Destroyed()
 
         if(PC != None)
         {
-            if(!bWasSpectator)
+            if(ServerConfig.bUseSpawnProtection)
+            {
+                PC.Pawn.DeactivateSpawnProtection();
+                PC.Pawn.SetMovementPhysics();
+            }
+            else if(!bWasSpectator)
             {
                 PC.bBehindView = false;
                 PC.FixFOV();
