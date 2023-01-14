@@ -10,6 +10,8 @@ class OpenSpyInfoPage extends GUIPage;
 
 #EXEC TEXTURE IMPORT NAME=lang_en FILE=Assets\Textures\lang_en.tga MIPS=0 ALPHA=1 DXT=3 LODSET=5
 #EXEC TEXTURE IMPORT NAME=lang_de FILE=Assets\Textures\lang_de.tga MIPS=0 ALPHA=1 DXT=3 LODSET=5
+#EXEC TEXTURE IMPORT NAME=lang_es FILE=Assets\Textures\lang_es.tga MIPS=0 ALPHA=1 DXT=3 LODSET=5
+#EXEC TEXTURE IMPORT NAME=lang_pt FILE=Assets\Textures\lang_pt.tga MIPS=0 ALPHA=1 DXT=3 LODSET=5
 #EXEC TEXTURE IMPORT NAME=lang_fr FILE=Assets\Textures\lang_fr.tga MIPS=0 ALPHA=1 DXT=3 LODSET=5
 #EXEC TEXTURE IMPORT NAME=lang_ru FILE=Assets\Textures\lang_ru.tga MIPS=0 ALPHA=1 DXT=3 LODSET=5
 
@@ -21,6 +23,8 @@ var automated moCheckBox ckDontShowAgain;
 
 var automated GUIButton btLangEN,
                         btLangDE,
+                        btLangES,
+                        btLangPT,
                         btLangFR,
                         btLangRU;
 
@@ -89,6 +93,12 @@ function UpdateLanguage(string Lang)
         case "DE":
             TextClass = class'OpenSpyInfoText_de';
             break;
+        case "ES":
+            TextClass = class'OpenSpyInfoText_es';
+            break;
+        case "PT":
+            TextClass = class'OpenSpyInfoText_pt';
+            break;
         case "FR":
             TextClass = class'OpenSpyInfoText_fr';
             break;
@@ -127,6 +137,12 @@ function bool SetLanguage(GUIComponent Sender)
         case btLangDE:
             UpdateLanguage("de");
             break;
+        case btLangES:
+            UpdateLanguage("es");
+            break;
+        case btLangPT:
+            UpdateLanguage("pt");
+            break;
         case btLangFR:
             UpdateLanguage("fr");
             break;
@@ -145,6 +161,8 @@ function DrawLanguageButtons(Canvas C)
 {
     DrawLanguageFlag(C, btLangEN);
     DrawLanguageFlag(C, btLangDE);
+    DrawLanguageFlag(C, btLangES);
+    DrawLanguageFlag(C, btLangPT);
     DrawLanguageFlag(C, btLangFR);
     DrawLanguageFlag(C, btLangRU);
 }
@@ -158,6 +176,12 @@ function DrawLanguageFlag(Canvas C, GUIButton Sender)
     {
         case btLangDE:
             T = Texture'lang_de';
+            break;
+        case btLangES:
+            T = Texture'lang_es';
+            break;
+        case btLangPT:
+            T = Texture'lang_pt';
             break;
         case btLangFR:
             T = Texture'lang_fr';
@@ -432,6 +456,32 @@ defaultproperties
         OnKeyEvent=btLangDE_.InternalOnKeyEvent
     End Object
     btLangDE=GUIButton'btLangDE_'
+
+    Begin Object Class=GUIButton Name=btLangES_
+        FontScale=FNS_Small
+        WinTop=0.131450
+        WinLeft=0.913335
+        WinWidth=0.035000
+        WinHeight=0.058700
+        bBoundToParent=True
+        bScaleToParent=True
+        OnClick=OpenSpyInfoPage.SetLanguage
+        OnKeyEvent=btLangDE_.InternalOnKeyEvent
+    End Object
+    btLangES=GUIButton'btLangES_'
+
+    Begin Object Class=GUIButton Name=btLangPT_
+        FontScale=FNS_Small
+        WinTop=0.131450
+        WinLeft=0.913335
+        WinWidth=0.035000
+        WinHeight=0.058700
+        bBoundToParent=True
+        bScaleToParent=True
+        OnClick=OpenSpyInfoPage.SetLanguage
+        OnKeyEvent=btLangPT_.InternalOnKeyEvent
+    End Object
+    btLangPT=GUIButton'btLangPT_'
 
     Begin Object Class=GUIButton Name=btLangFR_
         FontScale=FNS_Small
