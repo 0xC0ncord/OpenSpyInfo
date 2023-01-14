@@ -11,8 +11,10 @@ class OpenSpyInfoServerConfig extends Object
 	PerObjectConfig;
 
 var() config bool bUseSpawnProtection;
+var() config int IdleTimeoutSeconds;
 
 defaultproperties
 {
     bUseSpawnProtection=True
+    IdleTimeoutSeconds=120
 }

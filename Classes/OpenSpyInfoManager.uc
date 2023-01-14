@@ -16,6 +16,7 @@ var bool bWasSpectator;
 var bool bInitialized;
 var bool bOpened;
 var vector PawnLocation;
+var float IdleTimeout;
 
 var OpenSpyInfoPage InfoPage;
 
@@ -62,6 +63,10 @@ function Setup(OpenSpyInfoServerConfig SC)
             PawnLocation = PC.Pawn.Location;
         }
     }
+
+    IdleTimeout = Level.TimeSeconds + ServerConfig.IdleTimeoutSeconds;
+    PC.LastActiveTime = IdleTimeout;
+
     bInitialized = true;
 }
 
@@ -76,6 +81,10 @@ simulated function Tick(float dt)
             if(PC.Pawn.Location != PawnLocation)
                 PC.Pawn.SetLocation(PawnLocation);
         }
+
+        // make sure the player doesn't get kicked while this menu is open
+        if(PC.LastActiveTime != IdleTimeout && Level.TimeSeconds < IdleTimeout)
+            PC.LastActiveTime = IdleTimeout;
 
         if(bUpdateAgreementTimeout)
         {
