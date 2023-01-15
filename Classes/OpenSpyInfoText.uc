@@ -24,6 +24,10 @@ var string InfoText07;
 var string InfoText08;
 var string InfoText09;
 
+var string AutoConfigureWindowTitle;
+var string AutoConfigureContentText;
+var string Text_OK;
+
 defaultproperties
 {
     InfoText00="$(255,0,0)PLEASE READ THIS!"
@@ -41,4 +45,8 @@ defaultproperties
     Text_AutoConfigure="Auto-Configure"
     Text_MoreInfo="More Info"
     Text_DontShowAgain="Don't show this again"
+
+    AutoConfigureWindowTitle="Master Server List Auto-Configured"
+    AutoConfigureContentText="Your game client's master server list has been auto-configured to use OpenSpy.||Note that you will no longer be able to view servers that have not also switched in the server browser."
+    Text_OK="OK"
 }

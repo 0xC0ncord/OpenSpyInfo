@@ -27,6 +27,7 @@ var automated GUIButton btLangEN,
                         btLangPT,
                         btLangFR,
                         btLangRU;
+var string CurrentLanguage;
 
 var OpenSpyInfoManager Manager;
 var bool bClosed;
@@ -88,28 +89,8 @@ function UpdateLanguage(string Lang)
 {
     local class<OpenSpyInfoText> TextClass;
 
-    switch(Caps(Lang))
-    {
-        case "DE":
-            TextClass = class'OpenSpyInfoText_de';
-            break;
-        case "ES":
-            TextClass = class'OpenSpyInfoText_es';
-            break;
-        case "PT":
-            TextClass = class'OpenSpyInfoText_pt';
-            break;
-        case "FR":
-            TextClass = class'OpenSpyInfoText_fr';
-            break;
-        case "RU":
-            TextClass = class'OpenSpyInfoText_ru';
-            break;
-        case "EN":
-        default:
-            TextClass = class'OpenSpyInfoText';
-            break;
-    }
+    CurrentLanguage = Caps(Lang);
+    TextClass = GetTextClassForLanguage(CurrentLanguage);
 
     txHeader.Caption = Colorize(TextClass.default.InfoText00);
     lbText.MyScrollText.SetContent(
@@ -252,12 +233,18 @@ function bool Acknowledge(GUIComponent Sender)
 
 function bool AutoConfigure(GUIComponent Sender)
 {
+    local OpenSpyInfoAutoConfigureMessageWindow Menu;
+
     class'IpDrv.MasterServerLink'.default.MasterServerList.Length = 1;
     class'IpDrv.MasterServerLink'.default.MasterServerList[0].Address = "utmaster.openspy.net";
     class'IpDrv.MasterServerLink'.default.MasterServerList[0].Port = 28902;
     class'IpDrv.MasterServerLink'.static.StaticSaveConfig();
 
     Controller.OpenMenu(string(class'OpenSpyInfoAutoConfigureMessageWindow'));
+    Menu = OpenSpyInfoAutoConfigureMessageWindow(Controller.TopPage());
+    if(Menu != None)
+        Menu.SetLanguage(CurrentLanguage);
+
     return true;
 }
 
@@ -266,6 +253,26 @@ function bool MoreInfo(GUIComponent Sender)
     // note that opening https:// URLs are unsupported
     Controller.ViewportOwner.Actor.ConsoleCommand("Open" @ InfoURL);
     return true;
+}
+
+static final function class<OpenSpyInfoText> GetTextClassForLanguage(string Lang)
+{
+    switch(Caps(Lang))
+    {
+        case "DE":
+            return class'OpenSpyInfoText_de';
+        case "ES":
+            return class'OpenSpyInfoText_es';
+        case "PT":
+            return class'OpenSpyInfoText_pt';
+        case "FR":
+            return class'OpenSpyInfoText_fr';
+        case "RU":
+            return class'OpenSpyInfoText_ru';
+        case "EN":
+        default:
+            return class'OpenSpyInfoText';
+    }
 }
 
 static final function string Colorize(string S)
@@ -459,7 +466,7 @@ defaultproperties
 
     Begin Object Class=GUIButton Name=btLangES_
         FontScale=FNS_Small
-        WinTop=0.131450
+        WinTop=0.317562
         WinLeft=0.913335
         WinWidth=0.035000
         WinHeight=0.058700
@@ -472,7 +479,7 @@ defaultproperties
 
     Begin Object Class=GUIButton Name=btLangPT_
         FontScale=FNS_Small
-        WinTop=0.131450
+        WinTop=0.379599
         WinLeft=0.913335
         WinWidth=0.035000
         WinHeight=0.058700

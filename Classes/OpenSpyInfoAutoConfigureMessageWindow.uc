@@ -14,25 +14,25 @@ var automated GUIScrollTextBox lbMessage;
 
 var localized string WindowTitle, MessageText;
 
-function InitComponent(GUIController MyController, GUIComponent MyOwner)
-{
-    Super.InitComponent(MyController, MyOwner);
-
-    t_WindowTitle.SetCaption(WindowTitle);
-    lbMessage.SetContent(MessageText);
-}
-
 function bool InternalOnClick(GUIComponent Sender)
 {
     Controller.CloseMenu(false);
     return true;
 }
 
+function SetLanguage(string Lang)
+{
+    local class<OpenSpyInfoText> TextClass;
+
+    TextClass = class'OpenSpyInfoPage'.static.GetTextClassForLanguage(Lang);
+
+    lbMessage.MyScrollText.SetContent(TextClass.default.AutoConfigureContentText);
+    sbMessage.Caption = TextClass.default.AutoConfigureWindowTitle;
+    btOK.Caption = TextClass.default.Text_OK;
+}
+
 defaultproperties
 {
-    WindowTitle="Master Server List Auto-Configured"
-    MessageText="Your game client's master server list has been auto-configured to use OpenSpy.||Note that you will no longer be able to view servers that have not also switched in the server browser."
-
     bResizeWidthAllowed=False
     bResizeHeightAllowed=False
     bMoveAllowed=False
