@@ -8,12 +8,25 @@
 
 class MutOpenSpyInfo extends Mutator;
 
+const CONFIG_DATA_NAME = "Main";
+
 // Note to mod authors: if you are making a customized version of OpenSpyInfo,
 // feel free to remove this line. It is used to track internal versions of the
 // mod for official releases.
 const INTERNAL_VERSION = $$"__VERSIONSTRING__"$$;
 
+var OpenSpyInfoServerConfig ConfigData;
 var array<PlayerController> Pending;
+
+function PostBeginPlay()
+{
+    ConfigData = OpenSpyInfoServerConfig(FindObject("Package." $ CONFIG_DATA_NAME, class'OpenSpyInfoServerConfig'));
+    if(ConfigData == None)
+    {
+        ConfigData = new(None, CONFIG_DATA_NAME) class'OpenSpyInfoServerConfig';
+        ConfigData.SaveConfig(); // write out to config file for the first time
+    }
+}
 
 function bool CheckReplacement(Actor Other, out byte bSuperRelevant)
 {
@@ -77,7 +90,7 @@ function CreateManagerFor(PlayerController PC)
         return;
 
     A = Spawn(class'OpenSpyInfoManager', PC);
-    A.Setup();
+    A.Setup(ConfigData);
 }
 
 defaultproperties
