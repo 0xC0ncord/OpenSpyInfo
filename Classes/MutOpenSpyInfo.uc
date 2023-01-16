@@ -16,6 +16,7 @@ const CONFIG_DATA_NAME = "Main";
 const INTERNAL_VERSION = $$"__VERSIONSTRING__"$$;
 
 var OpenSpyInfoServerConfig ConfigData;
+var OpenSpyInfoRules Rules;
 var array<PlayerController> Pending;
 
 function PostBeginPlay()
@@ -25,6 +26,13 @@ function PostBeginPlay()
     {
         ConfigData = new(None, CONFIG_DATA_NAME) class'OpenSpyInfoServerConfig';
         ConfigData.SaveConfig(); // write out to config file for the first time
+    }
+
+    if(ConfigData.bUseSpawnProtection)
+    {
+        Rules = Spawn(class'OpenSpyInfoRules');
+        Rules.NextGameRules = Level.Game.GameRulesModifiers;
+        Level.Game.GameRulesModifiers = Rules;
     }
 }
 

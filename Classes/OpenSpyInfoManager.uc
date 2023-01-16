@@ -59,7 +59,6 @@ function Setup(OpenSpyInfoServerConfig SC)
         if(PC.Pawn != None)
         {
             PC.Pawn.SetPhysics(PHYS_None); // to avoid getting pushed around
-            PC.Pawn.SpawnTime = MaxInt; // infinite spawn protection
             PawnLocation = PC.Pawn.Location;
         }
     }
@@ -76,8 +75,8 @@ simulated function Tick(float dt)
     {
         if(ServerConfig.bUseSpawnProtection)
         {
+            // actual spawn protection handled by game rules
             PC.Pawn.SetPhysics(PHYS_None);
-            PC.Pawn.SpawnTime = MaxInt; // make sure spawn protection doesnt end until menu is closed
             if(PC.Pawn.Location != PawnLocation)
                 PC.Pawn.SetLocation(PawnLocation);
         }
