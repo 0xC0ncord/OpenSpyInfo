@@ -24,6 +24,17 @@ You must also ensure that this package exists on your server's redirect, regardl
 No matter which method you choose, your server will have the `MutOpenSpyInfo` mutator running which is needed to react to joining players and prompt them with the menu.
 Adding the file to your `ServerPackages` is optional as the mutator will do this automatically.
 
+Configuration
+-------------
+On the server, some additional options may be configured in the `OpenSpyInfo.ini` file:
+```ini
+[Main OpenSpyInfoServerConfig]
+bUseSpawnProtection=True
+IdleTimeoutSeconds=120
+```
+- `bUseSpawnProtection` - whether joining players should have spawn protection while the OpenSpyInfo menu is open. If disabled, players will be made into spectators instead and will auto-join when the menu is closed. This happens even if the player has checked the "Don't show again" option because the server must wait for the client to inform the server that they have selected this option. Disabling this option is known to cause issues with some mutators, particularly those that perform auto-balancing of teams.
+- `IdleTimeoutSeconds` - number of seconds that players with the menu open will have additional time on top of the server's default idle kicker. This is to ensure that players busy reading the text don't get kicked too early for idling.
+
 Screenshots
 -----------
 ![Screenshot of the OpenSpy Info message window](Screenshots/preview.png)
